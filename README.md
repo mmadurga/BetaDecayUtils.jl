@@ -10,7 +10,7 @@ Log(f) calculation adapted from Juhani Kantele's "Handbook of Nuclear Spectromet
 
 Neutron penetrability calculation adapted from "Theoretical Nuclear Physics" by Blatt and Weisskopf.
 
-### ecoulomb
+### Coulomb Shift
 
 `ecoulomb(Z,N)`
 
@@ -18,24 +18,30 @@ calculate the coulomb correction for a shell model calculation of isotope (Z,N)
 
 ###
 
-### daughterActivity
+### Daughter Activity
 
 `daughterActivity(x,A,λ)`
 
-A is initial activity, λ is the decay probability (ln2/T12)
+A: initial activity
+
+λ: decay probability (ln2/T12)
 
 ###
 
 
 
-### grandDaughterActivity
+### Granddaughter activity
 
 `grandDaughterActivity(x,A,λ,μ)`
 
-A:initial daughter activity, λ:daughter, μ:granddaughter
+A: initial daughter activity
+
+λ: daughter decay probability 
+
+μ: granddaughter decay probability
 
 
-### calculateT12
+### Halflife from BGT distribution
 
 
 `calculateT12(z,Qᵦ,Eₓ,BGT)`
@@ -50,7 +56,7 @@ BGT: vector of BGT values
 
 z: parent Z 
 
-### calculateIb
+### Partial branching ratios from BGT distribution
 
 `calculateIb(z,Qᵦ,Eₓ,BGT)`
 
@@ -66,7 +72,7 @@ z: parent Z
 
 ###
 
-### logftfromib
+### Log(ft) from partial branching ratios (Iᵦ)
 
 `logftfromib(z,t₁₂,Qᵦ,Eₓ,Iᵦ)`
 
@@ -75,7 +81,7 @@ calculate logft of a given transition to an excitated state
 Z of the parent, Qᵦ and Eₓ in MeV, t₁₂ in seconds, Iᵦ absolute value
 
 
-### logftfrombgt
+### Log(ft) from BGT distribution
 
 `logftfrombgt(bgt)`
 
