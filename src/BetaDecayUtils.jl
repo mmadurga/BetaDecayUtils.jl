@@ -172,9 +172,9 @@ calculates the neutron penetrability p(x,Lorb). Given a general reduced width γ
 
 Γ = p(x,Lorb)
 
-x is the excitation energy above Sₙ, Lorb is the neutron amngular momentum
+x is the excitation energy above Sₙ, Lorb is the neutron angular momentum
 
-mass[1] is the recoil, mass[2] is the neutron mass (1) in amplitude
+mass[1] is the recoil, mass[2] is the neutron mass
 
 """
 function nPenetrability(x,mass::Vector,Lorb)
