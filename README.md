@@ -12,7 +12,7 @@ Neutron penetrability calculation adapted from "Theoretical Nuclear Physics" by 
 
 ### ecoulomb
 
-ecoulomb(Z,N)
+`ecoulomb(Z,N)`
 
 calculate the coulomb correction for a shell model calculation of isotope (Z,N)
 
@@ -20,7 +20,7 @@ calculate the coulomb correction for a shell model calculation of isotope (Z,N)
 
 ### daughterActivity
 
-daughterActivity(x,A,λ)
+`daughterActivity(x,A,λ)`
 
 A is initial activity, λ is the decay probability (ln2/T12)
 
@@ -30,7 +30,7 @@ A is initial activity, λ is the decay probability (ln2/T12)
 
 ### grandDaughterActivity
 
-grandDaughterActivity(x,A,λ,μ)
+`grandDaughterActivity(x,A,λ,μ)`
 
 A:initial daughter activity, λ:daughter, μ:granddaughter
 
@@ -38,7 +38,7 @@ A:initial daughter activity, λ:daughter, μ:granddaughter
 ### calculateT12
 
 
-calculateT12(z,Qᵦ,Eₓ,BGT)
+`calculateT12(z,Qᵦ,Eₓ,BGT)`
 
 calculate halflife of the beta decay of an isotope given feedings to excited states
 
@@ -52,7 +52,7 @@ z: parent Z
 
 ### calculateIb
 
-calculateIb(z,Qᵦ,Eₓ,BGT)
+`calculateIb(z,Qᵦ,Eₓ,BGT)`
 
 calculate branching ratios of the beta decay of an isotope given feedings to excited states
 
@@ -68,7 +68,7 @@ z: parent Z
 
 ### logftfromib
 
-logftfromib(z,t₁₂,Qᵦ,Eₓ,Iᵦ)
+`logftfromib(z,t₁₂,Qᵦ,Eₓ,Iᵦ)`
 
 calculate logft of a given transition to an excitated state
 
@@ -77,7 +77,7 @@ Z of the parent, Qᵦ and Eₓ in MeV, t₁₂ in seconds, Iᵦ absolute value
 
 ### logftfrombgt
 
-logftfrombgt(bgt)
+`logftfrombgt(bgt)`
 
 calculate the logft for a given BGT (not quenched)
 
@@ -85,7 +85,7 @@ calculate the logft for a given BGT (not quenched)
 
 ### nPenetrability
 
-nPenetrability(x,mass::Vector,Lorb)
+`nPenetrability(x,mass::Vector,Lorb)`
 
 calculates the neutron penetrability p(x,Lorb). Given a general reduced width γ one can calculate the partial width as
 
