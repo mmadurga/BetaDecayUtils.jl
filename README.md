@@ -6,8 +6,11 @@
 
 Small collection of functions to calculate typical beta-decay observables and other properties. 
 
+Log(f) calculation adapted from Juhani Kantele's "Handbook of Nuclear Spectrometry", Academic Press Limited, London.
 
-###
+Neutron penetrability calculation adapted from "Theoretical Nuclear Physics" by Blatt and Weisskopf.
+
+### ecoulomb
 
 ecoulomb(Z,N)
 
@@ -15,7 +18,7 @@ calculate the coulomb correction for a shell model calculation of isotope (Z,N)
 
 ###
 
-###
+### daughterActivity
 
 daughterActivity(x,A,λ)
 
@@ -25,14 +28,14 @@ A is initial activity, λ is the decay probability (ln2/T12)
 
 
 
-###
+### grandDaughterActivity
 
 grandDaughterActivity(x,A,λ,μ)
 
 A:initial daughter activity, λ:daughter, μ:granddaughter
 
 
-###
+### calculateT12
 
 
 calculateT12(z,Qᵦ,Eₓ,BGT)
@@ -47,7 +50,7 @@ BGT: vector of BGT values
 
 z: parent Z 
 
-###
+### calculateIb
 
 calculateIb(z,Qᵦ,Eₓ,BGT)
 
@@ -63,7 +66,7 @@ z: parent Z
 
 ###
 
-###
+### logftfromib
 
 logftfromib(z,t₁₂,Qᵦ,Eₓ,Iᵦ)
 
@@ -72,7 +75,7 @@ calculate logft of a given transition to an excitated state
 Z of the parent, Qᵦ and Eₓ in MeV, t₁₂ in seconds, Iᵦ absolute value
 
 
-###
+### logftfrombgt
 
 logftfrombgt(bgt)
 
@@ -80,7 +83,7 @@ calculate the logft for a given BGT (not quenched)
 
 ###
 
-###
+### nPenetrability
 
 nPenetrability(x,mass::Vector,Lorb)
 

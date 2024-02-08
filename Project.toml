@@ -1,7 +1,7 @@
 name = "BetaDecayUtils"
 uuid = "b2723bf5-94c5-4359-89e1-3e553b39f040"
 authors = ["Miguel Madurga"]
-version = "1.0.0-DEV"
+version = "1.0.0"
 
 [compat]
 julia = "1"
