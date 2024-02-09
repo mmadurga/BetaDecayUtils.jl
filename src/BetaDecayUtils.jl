@@ -46,13 +46,13 @@ calculateT12(z,Qᵦ,Eₓ,BGT)
 
 calculate halflife of the beta decay of an isotope given feedings to excited states
 
-Qβ: β decay Q value in MeV
+z: parent Z 
 
-Ex: vector of daughter states relative to the ground state energy in MeV
+Qᵦ: β decay Q value in MeV
+
+Eₓ: vector of daughter states relative to the ground state energy in MeV
 
 BGT: vector of BGT values
-
-z: parent Z 
 
 """
 function calculateT12(z,Qᵦ,Eₓ::Vector,BGT::Vector)
@@ -86,13 +86,14 @@ calculateIb(z,Qᵦ,Eₓ,BGT)
 
 calculate branching ratios of the beta decay of an isotope given feedings to excited states
 
-Qβ: β decay Q value in MeV
+z: parent Z 
 
-Ex: vector of daughter states relative to the ground state energy in MeV
+Qᵦ: β decay Q value in MeV
+
+Eₓ: vector of daughter states relative to the ground state energy in MeV
 
 BGT: vector of BGT values
 
-z: parent Z 
 
 """
 function calculateIb(z,Qᵦ,Eₓ::Vector,BGT::Vector)
@@ -127,7 +128,17 @@ logftfromib(z,t₁₂,Qᵦ,Eₓ,Iᵦ)
 
 calculate logft of a given transition to an excitated state
 
-Z of the parent, Qᵦ and Eₓ in MeV, t₁₂ in seconds, Iᵦ absolute value
+z: parent Z 
+
+t₁₂: decay halflife
+
+Qᵦ: β decay Q value in MeV
+
+Eₓ: vector of daughter states relative to the ground state energy in MeV
+
+Iᵦ: vector of partial branching values
+
+
 
 """
 function logftfromib(z,t₁₂,Qᵦ,Eₓ,Iᵦ)  
@@ -168,9 +179,7 @@ end
 """
 nPenetrability(x,mass::Vector,Lorb)
 
-calculates the neutron penetrability p(x,Lorb). Given a general reduced width γ one can calculate the partial width as
-
-Γ = p(x,Lorb)
+calculates the neutron penetrability p(x,Lorb).
 
 x is the excitation energy above Sₙ, Lorb is the neutron angular momentum
 
