@@ -89,17 +89,15 @@ calculate the logft for a given `BGT` (not quenched)
 
 ###
 
-### nPenetrability
+### Neutron penetrability as a function of the neutron angular momentum
 
 `nPenetrability(x,mass::Vector,Lorb)`
 
-calculates the neutron penetrability p(x,Lorb). Given a general reduced width γ one can calculate the partial width as
+calculates the neutron penetrability p(x,Lorb).
 
-Γ = p(x,Lorb)
+`x` is the excitation energy above `Sₙ`, `Lorb` is the neutron angular momentum
 
-`x` is the excitation energy above `Sₙ`, `Lorb` is the neutron amngular momentum
-
-`mass[1]` is the recoil, `mass[2]` is the neutron mass
+`mass[1]` is the recoil, `mass[2]` is the neutron mass.
 
 
 ###
