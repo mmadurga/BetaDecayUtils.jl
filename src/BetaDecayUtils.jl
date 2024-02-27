@@ -1,6 +1,6 @@
 module BetaDecayUtils
 
-export logftfromib,calculateT12,daughterActivity, grandDaughterActivity,nPenetrability,logftfrombgt,calculateIb,ecoulomb
+export logf,logftfromib,calculateT12,daughterActivity, grandDaughterActivity,nPenetrability,logftfrombgt,calculateIb,ecoulomb
 
 ## β decay utilities
 
@@ -40,13 +40,47 @@ function grandDaughterActivity(x,A,λ::Float64,μ::Float64)
     return (λ*μ)/(μ-λ)*A*(exp(-λ*x)-exp(μ*x)) #A:initial activity, λ:daughter, μ:granddaughter
 end
 
+
+"""
+
+logf(z,Qᵦ,Eₓ)
+
+Calculate the log10 of the Fermi function for allowed beta decay
+
+z: atomic number of the parent
+
+Qᵦ: β decay Q value in MeV
+
+Eₓ: vector of daughter states relative to the ground state energy in MeV
+
+"""
+function logf(z,Qᵦ,Eₓ::Vector)  
+    coeff = [ -17.2       7.9015    -2.54        0.28482;
+    3.31368   -2.06273    0.703822   -0.075039;
+   -0.364018   0.387961  -0.142528    0.016;
+    0.0278071 -0.026519   0.0098854  -0.00113772
+]  ;
+zDaughter = z + 1
+evalCoeff = [
+coeff[1,1] + log(zDaughter) * coeff[1,2] + coeff[1,3]*log(zDaughter)^2. + coeff[1,4]*log(zDaughter)^3.,
+coeff[2,1] + log(zDaughter) * coeff[2,2] + coeff[2,3]*log(zDaughter)^2. + coeff[2,4]*log(zDaughter)^3.,
+coeff[3,1] + log(zDaughter) * coeff[3,2] + coeff[3,3]*log(zDaughter)^2. + coeff[3,4]*log(zDaughter)^3.,
+coeff[4,1] + log(zDaughter) * coeff[4,2] + coeff[4,3]*log(zDaughter)^2. + coeff[4,4]*log(zDaughter)^3.  
+]
+βEp = (Qᵦ -  (Eₓ)) * 1000 #convert to keV
+
+return evalCoeff[1] + evalCoeff[2]*log(βEp) + evalCoeff[3]*log(βEp)^2. + evalCoeff[4]*log(βEp).^3.
+
+end
+
+
 """
 
 calculateT12(z,Qᵦ,Eₓ,BGT)
 
 calculate halflife of the beta decay of an isotope given feedings to excited states
 
-z: parent Z 
+z: Atomic number of the parent 
 
 Qᵦ: β decay Q value in MeV
 
@@ -86,7 +120,7 @@ calculateIb(z,Qᵦ,Eₓ,BGT)
 
 calculate branching ratios of the beta decay of an isotope given feedings to excited states
 
-z: parent Z 
+z: Atomic number of the parent
 
 Qᵦ: β decay Q value in MeV
 
@@ -128,7 +162,7 @@ logftfromib(z,t₁₂,Qᵦ,Eₓ,Iᵦ)
 
 calculate logft of a given transition to an excitated state
 
-z: parent Z 
+z: atomic number of the parent
 
 t₁₂: decay halflife
 

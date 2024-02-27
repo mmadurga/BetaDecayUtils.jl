@@ -40,6 +40,19 @@ calculate the coulomb correction for a shell model calculation of isotope (Z,N)
 
 `μ`: granddaughter decay probability
 
+### Logarithm of the Fermi function
+
+`logf(z,Qᵦ,Eₓ)`
+
+Calculate the log10 of the Fermi function for allowed beta decay
+
+`z`: atomic number of the parent
+
+`Qᵦ`: β decay Q value in MeV
+
+`Eₓ`: vector of daughter states relative to the ground state energy in MeV
+
+###
 
 ### Halflife from BGT distribution
 
@@ -54,7 +67,7 @@ calculate halflife of the beta decay of an isotope given feedings to excited sta
 
 `BGT`: vector of BGT values
 
-`z`: parent Z 
+`z`: atomic number of the parent
 
 ### Partial branching ratios from BGT distribution
 
@@ -68,7 +81,7 @@ calculate branching ratios of the beta decay of an isotope given feedings to exc
 
 `BGT`: vector of BGT values
 
-`z`: parent Z 
+`z`: atomic number of the parent
 
 ###
 
