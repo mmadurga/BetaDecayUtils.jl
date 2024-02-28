@@ -54,7 +54,7 @@ Qᵦ: β decay Q value in MeV
 Eₓ: vector of daughter states relative to the ground state energy in MeV
 
 """
-function logf(z,Qᵦ,Eₓ::Vector)  
+function logf(z,Qᵦ,Eₓ)  
     coeff = [ -17.2       7.9015    -2.54        0.28482;
     3.31368   -2.06273    0.703822   -0.075039;
    -0.364018   0.387961  -0.142528    0.016;
