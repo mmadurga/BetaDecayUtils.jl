@@ -50,7 +50,7 @@ Calculate the log10 of the Fermi function for allowed beta decay
 
 `Qᵦ`: β decay Q value in MeV
 
-`Eₓ`: vector of daughter states relative to the ground state energy in MeV
+`Eₓ`: daughter state energy relative to the ground state energy in MeV
 
 ###
 

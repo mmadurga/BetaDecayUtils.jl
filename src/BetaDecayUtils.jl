@@ -51,7 +51,7 @@ z: atomic number of the parent
 
 Qᵦ: β decay Q value in MeV
 
-Eₓ: vector of daughter states relative to the ground state energy in MeV
+Eₓ: daughter state energy relative to the ground state energy in MeV
 
 """
 function logf(z,Qᵦ,Eₓ)  
