@@ -91,7 +91,15 @@ calculate branching ratios of the beta decay of an isotope given feedings to exc
 
 calculate logft of a given transition to an excitated state
 
-`Z` of the parent, `Qᵦ` and `Eₓ` in MeV, `t₁₂` in seconds, `Iᵦ` absolute value
+`z`: atomic number of the parent
+
+`t₁₂`: decay halflife
+
+`Qᵦ`: β decay Q value in MeV
+
+`Eₓ`: energy of daughter state relative to the ground state energy in MeV
+
+`Iᵦ`: partial branching values
 
 
 ### Log(ft) from BGT distribution

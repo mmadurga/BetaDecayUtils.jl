@@ -168,9 +168,9 @@ t₁₂: decay halflife
 
 Qᵦ: β decay Q value in MeV
 
-Eₓ: vector of daughter states relative to the ground state energy in MeV
+Eₓ: energy of daughter state relative to the ground state energy in MeV
 
-Iᵦ: vector of partial branching values
+Iᵦ: partial branching values
 
 
 
