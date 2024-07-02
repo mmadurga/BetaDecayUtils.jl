@@ -37,7 +37,7 @@ A:initial daughter activity, λ:daughter, μ:granddaughter
 
 """
 function grandDaughterActivity(x,A,λ::Float64,μ::Float64)
-    return (λ*μ)/(μ-λ)*A*(exp(-λ*x)-exp(μ*x)) #A:initial activity, λ:daughter, μ:granddaughter
+    return (λ*μ)/(μ-λ)*A*(exp(-λ*x)-exp(-μ*x)) #A:initial activity, λ:daughter, μ:granddaughter
 end
 
 
