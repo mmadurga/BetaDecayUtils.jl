@@ -49,18 +49,20 @@ activity of the n'th member of a decay chain.
 
 A:initial parent nuclei. If initial activity is desired as input use A*λ[1]
 
-λ:vector containing every child decay probability
+λ:vector containing  all decay probabilities in the chain
+
+n:decay curve of n'th member
 
 """
-function chainActivity(t,A,λ)
+function chainActivity(t,A,λ,n)
 
     sum=0
 
-    for i in eachindex(λ)
+    for i in 1:n
 
     product=λ[i]
 
-    for j in eachindex(λ) if j!=i product*=λ[j]/(λ[j]-λ[i]);  end end
+    for j in 1:n if j!=i product*=λ[j]/(λ[j]-λ[i]);  end end
     
     sum+=product*exp(-λ[i]*t)
 
