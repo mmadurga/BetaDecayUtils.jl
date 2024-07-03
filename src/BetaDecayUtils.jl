@@ -25,7 +25,7 @@ A is initial activity, λ is the decay probability (ln2/T12)
 
 """
 function daughterActivity(x,A,λ::Float64)
-    return A*exp(-λ*x)  #A is initial activity, λ is the decay probability (ln2/T12)
+    return λ*A*exp(-λ*x)  #A is initial activity, λ is the decay probability (ln2/T12)
 end
 
 
