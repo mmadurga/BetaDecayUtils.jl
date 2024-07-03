@@ -19,25 +19,55 @@ end
 
 """
 
-daughterActivity(x,A,λ)
+childActivity(x,A,λ)
 
-A is initial activity, λ is the decay probability (ln2/T12)
+A is initial activity), λ is the decay probability (ln2/T12)
 
 """
-function daughterActivity(x,A,λ::Float64)
-    return λ*A*exp(-λ*x)  #A is initial activity, λ is the decay probability (ln2/T12)
+function childActivity(x,A,λ::Float64)
+    return A*exp(-λ*x)  #A is initial activity, λ is the decay probability (ln2/T12)
 end
 
 
 """
 
-grandDaughterActivity(x,A,λ,μ)
+grandChildActivity(x,A,λ,μ)
 
-A:initial daughter activity, λ:daughter, μ:granddaughter
+A:initial activity, λ:child, μ:grandchild
 
 """
-function grandDaughterActivity(x,A,λ::Float64,μ::Float64)
-    return (λ*μ)/(μ-λ)*A*(exp(-λ*x)-exp(-μ*x)) #A:initial activity, λ:daughter, μ:granddaughter
+function grandChildActivity(x,A,λ::Float64,μ::Float64)
+    return (μ)/(μ-λ)*A*(exp(-λ*x)-exp(-μ*x)) #A:initial activity, λ:child, μ:grandchild
+end
+
+
+"""
+
+chainActivity(x,A,λ)
+
+activity of the n'th member of a decay chain.
+
+A:initial parent nuclei. If initial activity is desired as input use A*λ[1]
+
+λ:vector containing every child decay probability
+
+"""
+function chainActivity(t,A,λ)
+
+    sum=0
+
+    for i in eachindex(λ)
+
+    product=λ[i]
+
+    for j in eachindex(λ) if j!=i product*=λ[j]/(λ[j]-λ[i]);  end end
+    
+    sum+=product*exp(-λ[i]*t)
+
+    end
+    
+    return A*sum
+
 end
 
 

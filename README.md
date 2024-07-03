@@ -18,9 +18,9 @@ calculate the coulomb correction for a shell model calculation of isotope (Z,N)
 
 ###
 
-### Daughter Activity
+### Child Activity
 
-`daughterActivity(x,A,λ)`
+`childActivity(x,A,λ)`
 
 `A`: initial activity
 
@@ -30,15 +30,26 @@ calculate the coulomb correction for a shell model calculation of isotope (Z,N)
 
 
 
-### Granddaughter activity
+### Grandchild activity
 
-`grandDaughterActivity(x,A,λ,μ)`
+`grandChildActivity(x,A,λ,μ)`
 
 `A`: initial daughter activity
 
-`λ`: daughter decay probability 
+`λ`: child decay probability 
 
-`μ`: granddaughter decay probability
+`μ`: grandchild decay probability
+
+### chainActivity(x,A,λ)
+
+`chainActivity(x,A,λ)`
+
+activity of the n'th member of a decay chain.
+
+`A`:initial parent nuclei. If initial activity is desired as input use `A*λ[1]`
+
+`λ`:vector containing every child decay probability
+
 
 ### Logarithm of the Fermi function
 
