@@ -19,6 +19,24 @@ end
 
 """
 
+calculateqbetashellmodel(groundstateparent,groundstatechild,zparent,aparent,zchild,achild)
+
+calculate the beta-decay Q value using shell model calculation of the ground state energies
+
+groundstateparent:absolute energy of the parent ground state in MeV
+groundstatechild:absolute energy of the child ground state in MeV 
+zparent: Z of the parent
+aparent: A of the parent
+zchild: Z of the child
+aparent: A of the child
+
+"""
+function calculateqbetashellmodel(groundstateparent,groundstatechild,zparent,aparent,zchild,achild)
+    return groundstateparent + Ec(zparent,aparent) - groundstatechild - Ec(zchild,achild) + 0.78
+end
+
+"""
+
 childActivity(x,A,λ)
 
 A is initial activity), λ is the decay probability (ln2/T12)
