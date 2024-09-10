@@ -29,15 +29,15 @@ groundstatechild:absolute energy of the child ground state in MeV
 
 zparent: Z of the parent
 
-aparent: A of the parent
+nparent: N of the parent
 
-zchild: Z of the child
+nchild: Z of the child
 
-aparent: A of the child
+nparent: N of the child
 
 """
-function calculateqbetashellmodel(groundstateparent,groundstatechild,zparent,aparent,zchild,achild)
-    return groundstateparent + Ec(zparent,aparent) - groundstatechild - Ec(zchild,achild) + 0.78
+function calculateqbetashellmodel(groundstateparent,groundstatechild,zparent,nparent,zchild,nchild)
+    return groundstateparent + Ec(zparent,nparent) - groundstatechild - Ec(zchild,nchild) + 0.78
 end
 
 """

@@ -20,7 +20,7 @@ calculate the coulomb correction for a shell model calculation of isotope (Z,N)
 
 ### Beta Decay Q value from shell model
 
-`calculateqbetashellmodel(groundstateparent,groundstatechild,zparent,aparent,zchild,achild)`
+`calculateqbetashellmodel(groundstateparent,groundstatechild,zparent,nparent,zchild,nchild)`
 
 calculate the beta-decay Q value using shell model calculation of the ground state energies
 
@@ -30,11 +30,11 @@ calculate the beta-decay Q value using shell model calculation of the ground sta
 
 `zparent`: Z of the parent
 
-`aparent`: A of the parent
+`nparent`: N of the parent
 
 `zchild`: Z of the child
 
-`aparent`: A of the child
+`nparent`: N of the child
 
 ###
 
