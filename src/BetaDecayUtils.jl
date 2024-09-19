@@ -1,6 +1,6 @@
 module BetaDecayUtils
 
-export logf,logftfromib,calculateT12,childActivity, grandChildActivity,chainActivity,nPenetrability,logftfrombgt,calculateIb,ecoulomb
+export calculateqbetashellmodel,logf,logftfromib,calculateT12,childActivity, grandChildActivity,chainActivity,nPenetrability,logftfrombgt,calculateIb,ecoulomb
 
 ## β decay utilities
 
