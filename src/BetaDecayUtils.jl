@@ -305,6 +305,9 @@ function nPenetrability(x,mass::Vector,Lorb)
     s5 = (σ^2*(5-s4) / ((5-s4)^2+p4^2) ) - 5 
     p5 = p4*(σ^2/((5-s4)^2+p4^2))
 
+    s6 = (σ^2*(6-s5) / ((6-s5)^2+p5^2) ) - 6
+    p6 = p5*(σ^2/((6-s5)^2+p5^2))
+
     if (Lorb==0.) 
         return p0
     elseif (Lorb==1.) 
@@ -317,6 +320,8 @@ function nPenetrability(x,mass::Vector,Lorb)
         return p4
     elseif (Lorb==5.)
         return p5
+    elseif (Lorb==6.)
+        return p6
     end
 
 end
