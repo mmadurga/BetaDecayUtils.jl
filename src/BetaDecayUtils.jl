@@ -37,7 +37,7 @@ nparent: N of the child
 
 """
 function calculateqbetashellmodel(groundstateparent,groundstatechild,zparent,nparent,zchild,nchild)
-    return groundstateparent + Ec(zparent,nparent) - groundstatechild - Ec(zchild,nchild) + 0.78
+    return groundstateparent + ecoulomb(zparent,nparent) - groundstatechild - ecoulomb(zchild,nchild) + 0.78
 end
 
 """
