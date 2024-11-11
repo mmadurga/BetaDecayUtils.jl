@@ -122,7 +122,7 @@ calculate branching ratios of the beta decay of an isotope given feedings to exc
 
 ### BGTs from partial branching ratios
 
-`calculateBGT(z,Qᵦ,T₁₂,Eₓ,BGT)`
+`calculateBGT(z,Qᵦ,T₁₂,Eₓ,Iᵦ)`
 
 calculate beta decay strength of an isotope given partial branching ratios to excited states
 
