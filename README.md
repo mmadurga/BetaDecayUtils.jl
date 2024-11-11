@@ -120,6 +120,23 @@ calculate branching ratios of the beta decay of an isotope given feedings to exc
 
 ###
 
+### BGTs from partial branching ratios
+
+`calculateBGT(z,Qᵦ,T₁₂,Eₓ,BGT)`
+
+calculate beta decay strength of an isotope given partial branching ratios to excited states
+
+`z:` Atomic number of the parent
+
+`Qᵦ`: β decay Q value in MeV
+
+`T₁₂`: beta decay half-life
+
+`Eₓ`: vector of daughter states relative to the ground state energy in MeV
+
+`Iᵦ`: vector of Iᵦ values
+
+
 ### Log(ft) from partial branching ratios (Iᵦ)
 
 `logftfromib(z,t₁₂,Qᵦ,Eₓ,Iᵦ)`

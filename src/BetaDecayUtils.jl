@@ -1,6 +1,6 @@
 module BetaDecayUtils
 
-export calculateqbetashellmodel,logf,logftfromib,calculateT12,childActivity, grandChildActivity,chainActivity,nPenetrability,logftfrombgt,calculateIb,ecoulomb
+export calculateqbetashellmodel,logf,logftfromib,calculateT12,childActivity, grandChildActivity,chainActivity,nPenetrability,logftfrombgt,calculateIb,calculateBGT,ecoulomb
 
 ## β decay utilities
 
@@ -207,6 +207,47 @@ function calculateIb(z,Qᵦ,Eₓ::Vector,BGT::Vector)
     λ=log(2) .* 10 .^lf .* BGT[findall(βEp.>0)] ./ D
 
     return λ./sum(λ)
+    
+end
+
+"""
+calculateBGT(z,Qᵦ,T₁₂,Eₓ,Iᵦ)
+
+calculate beta decay strength of an isotope given partial branching ratios to excited states
+
+z: Atomic number of the parent
+
+Qᵦ: β decay Q value in MeV
+
+T₁₂: beta decay half-life
+
+Eₓ: vector of daughter states relative to the ground state energy in MeV
+
+Iᵦ: vector of Iᵦ values
+
+
+"""
+function calculateBGT(z,Qᵦ,T₁₂,Eₓ::Vector,Iᵦ::Vector)
+
+
+    coeff = [ -17.2       7.9015    -2.54        0.28482;
+           3.31368   -2.06273    0.703822   -0.075039;
+          -0.364018   0.387961  -0.142528    0.016;
+           0.0278071 -0.026519   0.0098854  -0.00113772
+       ]  ;
+    zDaughter = z + 1
+    evalCoeff = [
+    coeff[1,1] + log(zDaughter) * coeff[1,2] + coeff[1,3]*log(zDaughter)^2. + coeff[1,4]*log(zDaughter)^3.,
+    coeff[2,1] + log(zDaughter) * coeff[2,2] + coeff[2,3]*log(zDaughter)^2. + coeff[2,4]*log(zDaughter)^3.,
+    coeff[3,1] + log(zDaughter) * coeff[3,2] + coeff[3,3]*log(zDaughter)^2. + coeff[3,4]*log(zDaughter)^3.,
+    coeff[4,1] + log(zDaughter) * coeff[4,2] + coeff[4,3]*log(zDaughter)^2. + coeff[4,4]*log(zDaughter)^3.  
+    ]
+    βEp = (Qᵦ .-  (Eₓ)) .* 1000 #convert to keV
+    lf = evalCoeff[1] .+ evalCoeff[2].*log.(βEp[findall(βEp.>0)]) .+ evalCoeff[3].*log.(βEp[findall(βEp.>0)]).^2. .+ evalCoeff[4].*log.(βEp[findall(x->x>0,βEp)]).^3.
+
+    D=6144/(-1.2701)^2
+
+    return D.*Iᵦ./(10 .^lf*T₁₂)
     
 end
 
