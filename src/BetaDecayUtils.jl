@@ -19,7 +19,7 @@ end
 
 """
 
-calculateqbetashellmodel(groundstateparent,groundstatechild,zparent,aparent,zchild,achild)
+calculateqbetashellmodel(groundstateparent,groundstatechild,zparent,nparent,zchild,nchild)
 
 calculate the beta-decay Q value using shell model calculation of the ground state energies
 
