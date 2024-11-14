@@ -401,12 +401,13 @@ plot(e->f(e,p),xlow,xhigh)
 """
 function gammafit(data,xlow,xhigh,param::Vector,n=nothing,lowerbounds=nothing,upperbounds=nothing)
   
+    if isnothing(n) n=1 end 
+
     if length(param)!=n*3+2 throw(DomainError(length(param), "must have [3*number of photopeak + 2] parameters")) end
     if n>2 throw(DomainError(n, "number of photopeaks must be 2 or less")) end
     if isnothing(lowerbounds) if upperbounds!==nothing throw(DomainError(lowerbounds,"both lower and upper bounds must be defined")) end end
     if isnothing(upperbounds) if lowerbounds!==nothing throw(DomainError(lowerbounds,"both lower and upper bounds must be defined")) end end
 
-    if isnothing(n) n=1 end 
 
 
     fitfunctions = [(e,p)->p[1].+ p[2].*e .+ p[3].*(1 ./sqrt.(2π.*p[5].^2)).*exp.(-0.5.*(e.-p[4]).^2 ./p[5].^2) , 
