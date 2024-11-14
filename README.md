@@ -182,6 +182,8 @@ calculates the neutron penetrability p(x,Lorb).
 Fit a gamma line in a histogram using a gaussian distribution with linear background. 
 Returns a three element list containing: parameters from fit; standard error of the parameters; fitting function f(x,param)
 
+Current version requires `LsqFit` to be loaded
+
 `data`:           histogram in the `[energy counts]` format
 
 `xlow`:           low energy cut for the fit
