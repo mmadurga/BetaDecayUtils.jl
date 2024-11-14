@@ -402,6 +402,7 @@ plot(e->f(e,p),xlow,xhigh)
 function gammafit(data,xlow,xhigh,param::Vector,n=nothing,lowerbounds=nothing,upperbounds=nothing)
   
     if length(param)!=n*3+2 throw(DomainError(length(param), "must have [3*number of photopeak + 2] parameters")) end
+    if n>2 throw(DomainError(n, "number of photopeaks must be 2 or less")) end
     if isnothing(lowerbounds) if upperbounds!==nothing throw(DomainError(lowerbounds,"both lower and upper bounds must be defined")) end end
     if isnothing(upperbounds) if lowerbounds!==nothing throw(DomainError(lowerbounds,"both lower and upper bounds must be defined")) end end
 
@@ -417,12 +418,10 @@ function gammafit(data,xlow,xhigh,param::Vector,n=nothing,lowerbounds=nothing,up
     if isnothing(lowerbounds) && isnothing(upperbounds)
         if n==1 fit=curve_fit(fitfunctions[1],data[data[:,1].<xhigh .&& data[:,1].>xlow,1],data[data[:,1].<xhigh .&& data[:,1].>xlow,2],param)
         elseif n==2 fit=curve_fit(fitfunctions[n],data[data[:,1].<xhigh .&& data[:,1].>xlow,1],data[data[:,1].<xhigh .&& data[:,1].>xlow,2],param)
-        else throw(DomainError(n, "number of photopeaks must be 2 or less"))
         end
     else 
         if n==1 fit=curve_fit(fitfunctions[1],data[data[:,1].<xhigh .&& data[:,1].>xlow,1],data[data[:,1].<xhigh .&& data[:,1].>xlow,2],param,lower=lowerbounds,upper=upperbounds)
         elseif n==2 fit=curve_fit(fitfunctions[n],data[data[:,1].<xhigh .&& data[:,1].>xlow,1],data[data[:,1].<xhigh .&& data[:,1].>xlow,2],param,lower=lowerbounds,upper=upperbounds)
-        else throw(DomainError(n, "number of photopeaks must be 2 or less"))
         end
     end
 
