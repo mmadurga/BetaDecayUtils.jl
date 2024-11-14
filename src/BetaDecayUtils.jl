@@ -416,13 +416,9 @@ function gammafit(data,xlow,xhigh,param::Vector,n=nothing,lowerbounds=nothing,up
     fit=nothing
     
     if isnothing(lowerbounds) && isnothing(upperbounds)
-        if n==1 fit=curve_fit(fitfunctions[1],data[data[:,1].<xhigh .&& data[:,1].>xlow,1],data[data[:,1].<xhigh .&& data[:,1].>xlow,2],param)
-        elseif n==2 fit=curve_fit(fitfunctions[n],data[data[:,1].<xhigh .&& data[:,1].>xlow,1],data[data[:,1].<xhigh .&& data[:,1].>xlow,2],param)
-        end
+        fit=curve_fit(fitfunctions[n],data[data[:,1].<xhigh .&& data[:,1].>xlow,1],data[data[:,1].<xhigh .&& data[:,1].>xlow,2],param)
     else 
-        if n==1 fit=curve_fit(fitfunctions[1],data[data[:,1].<xhigh .&& data[:,1].>xlow,1],data[data[:,1].<xhigh .&& data[:,1].>xlow,2],param,lower=lowerbounds,upper=upperbounds)
-        elseif n==2 fit=curve_fit(fitfunctions[n],data[data[:,1].<xhigh .&& data[:,1].>xlow,1],data[data[:,1].<xhigh .&& data[:,1].>xlow,2],param,lower=lowerbounds,upper=upperbounds)
-        end
+        fit=curve_fit(fitfunctions[n],data[data[:,1].<xhigh .&& data[:,1].>xlow,1],data[data[:,1].<xhigh .&& data[:,1].>xlow,2],param,lower=lowerbounds,upper=upperbounds)
     end
 
     sigma=stderror(fit)
