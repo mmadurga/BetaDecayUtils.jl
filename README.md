@@ -175,11 +175,11 @@ calculates the neutron penetrability p(x,Lorb).
 
 ###
 
-###
+### Gaussian fit of gamma photopeak
 
 `gammafit(data,xlow,xhigh,param::Vector,n=nothing,lowerbounds=nothing,upperbounds=nothing)`
 
-Gamma photopeak fit of a histogram using a gaussian distribution with linear background. 
+Fit a gamma line in a histogram using a gaussian distribution with linear background. 
 Returns a three element list containing: parameters from fit; standard error of the parameters; fitting function f(x,param)
 
 `data`:           histogram in the `[energy,counts]` format
