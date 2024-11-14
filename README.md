@@ -183,16 +183,23 @@ Fit a gamma line in a histogram using a gaussian distribution with linear backgr
 Returns a three element list containing: parameters from fit; standard error of the parameters; fitting function f(x,param)
 
 `data`:           histogram in the `[energy,counts]` format
+
 `xlow`:           low energy cut for the fit
+
 `xhigh`:          high energy cut for the fit
+
 `param`:          initial fit parameters vector (must be 3*n+1). Format: `[background-constant,background-slope,area1,centroid1,sigma1,area2,centroid2,sigma2,...]`
+
 `n`:              number of peaks to fit (default=1)
+
 `lowerbounds`:    lower parameter bounds (optional). same format as param
+
 `upperbounds`:    upper parameter bounds (optional). same format as param
 
 Example: fit a gamma line at 988 keV
 
 `xlow,xhigh,param=980,1000,[600,0.05,1000,988,0.8]`
+
 `p,s,f = gammafit(data,xlow,xhigh,param)`
 
 to print the result of the fit parameters
