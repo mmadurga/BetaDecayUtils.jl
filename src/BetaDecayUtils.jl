@@ -375,7 +375,7 @@ gammafit(data,xlow,xhigh,param::Vector,n=nothing,lowerbounds=nothing,upperbounds
 Gamma photopeak fit of a histogram using a gaussian distribution with linear background. 
 Returns a three element list containing: parameters from fit; standard error of the parameters; fitting function f(x,param)
 
-data:           histogram in the [energy,counts] format
+data:           histogram array in the [energy counts] format
 xlow:           low energy cut for the fit
 xhigh:          high energy cut for the fit
 param:          initial fit parameters vector (must be 3*n+1). Format: [background-constant,background-slope,area1,centroid1,sigma1,area2,centroid2,sigma2,...]
