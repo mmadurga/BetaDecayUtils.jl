@@ -417,7 +417,7 @@ function gammafit(data,xlow,xhigh,param::Vector,n=nothing,lowerbounds=nothing,up
   
     if isnothing(n) n=1 end 
 
-    if length(param)!=n*3+2 throw(DomainError(length(param) "must have [3*number of photopeak + 2] parameters")) end
+    if length(param)!=n*3+2 throw(DomainError(length(param), "must have [3*number of photopeak + 2] parameters")) end
     if n>2 throw(DomainError(n, "number of photopeaks must be 2 or less")) end
     if isnothing(lowerbounds) if upperbounds!==nothing throw(DomainError(lowerbounds,"both lower and upper bounds must be defined")) end end
     if isnothing(upperbounds) if lowerbounds!==nothing throw(DomainError(lowerbounds,"both lower and upper bounds must be defined")) end end
