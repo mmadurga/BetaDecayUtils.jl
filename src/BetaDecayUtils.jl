@@ -408,11 +408,8 @@ function gammafit(data,xlow,xhigh,param::Vector,n=nothing,lowerbounds=nothing,up
     if isnothing(lowerbounds) if upperbounds!==nothing throw(DomainError(lowerbounds,"both lower and upper bounds must be defined")) end end
     if isnothing(upperbounds) if lowerbounds!==nothing throw(DomainError(lowerbounds,"both lower and upper bounds must be defined")) end end
 
-
-
     fitfunctions = [(e,p)->p[1].+ p[2].*e .+ p[3].*(1 ./sqrt.(2π.*p[5].^2)).*exp.(-0.5.*(e.-p[4]).^2 ./p[5].^2) , 
                     (e,p)->p[1].+ p[2].*e .+ p[3].*(1 ./sqrt.(2π.*p[5].^2)).*exp.(-0.5.*(e.-p[4]).^2 ./p[5].^2) .+ p[6].*(1 ./sqrt.(2π.*p[8].^2)).*exp.(-0.5.*(e.-p[7]).^2 ./p[8].^2)]
-
 
     fit=nothing
     
