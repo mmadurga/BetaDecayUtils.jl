@@ -1,6 +1,18 @@
 module BetaDecayUtils
 
-export calculateqbetashellmodel,logf,logftfromib,calculateT12,childActivity, grandChildActivity,chainActivity,nPenetrability,logftfrombgt,calculateIb,calculateBGT,ecoulomb,gammafit
+export  calculateqbetashellmodel,
+        logf,
+        logftfromib,
+        calculateT12,
+        childActivity, 
+        grandChildActivity,
+        chainActivity,
+        nPenetrability,
+        logftfrombgt,
+        calculateIb,
+        calculateBGT,
+        ecoulomb,
+        gammafit
 
 using LsqFit
 
@@ -392,9 +404,9 @@ p,s,f = gammafit(data,xlow,xhigh,param)
 
 to print the result of the fit parameters
 
-for (i,val) in enumerate(p)
-    println("P$i = ",val,"($(s[i]))")
-end
+# for (i,val) in enumerate(p)
+#     println("Pi = ",val,"((s[i]))")
+# end
 
 to plot the result of the fit use the returned function f with the optimized parameters p
 
