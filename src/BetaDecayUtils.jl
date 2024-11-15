@@ -14,7 +14,7 @@ export  calculateqbetashellmodel,
         ecoulomb,
         gammafit
 
-using LsqFit
+import LsqFit
 
 ## β decay utilities
 
