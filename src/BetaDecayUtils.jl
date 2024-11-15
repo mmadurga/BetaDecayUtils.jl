@@ -402,13 +402,13 @@ Example: fit a gamma line at 988 keV
 xlow,xhigh,param=980,1000,[600,0.05,1000,988,0.8]
 p,s,f = gammafit(data,xlow,xhigh,param)
 
-to print the result of the fit parameters
+to print the result of the fit parameters:
 
-# for (i,val) in enumerate(p)
-#     println("Pi = ",val,"((s[i]))")
-# end
+for (i,val) in enumerate(p)
+    println("Pi = ",val,"((s[i]))")
+end
 
-to plot the result of the fit use the returned function f with the optimized parameters p
+to plot the result of the fit use the returned function f with the optimized parameters p:
 
 plot(e->f(e,p),xlow,xhigh)
 
