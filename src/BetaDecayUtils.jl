@@ -220,7 +220,7 @@ function calculateIb(z,Qᵦ,Eₓ::Vector,BGT::Vector)
     D=6144/(-1.2701)^2
     λ=log(2) .* 10 .^lf .* BGT[findall(βEp.>0)] ./ D
 
-    t₁₂=calculateT12(11,Qᵦ,Eₓ,BGT)
+    t₁₂=calculateT12(z,Qᵦ,Eₓ,BGT)
 
     return λ.*t₁₂/log(2)
     
