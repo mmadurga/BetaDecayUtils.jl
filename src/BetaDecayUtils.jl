@@ -220,7 +220,9 @@ function calculateIb(z,Qᵦ,Eₓ::Vector,BGT::Vector)
     D=6144/(-1.2701)^2
     λ=log(2) .* 10 .^lf .* BGT[findall(βEp.>0)] ./ D
 
-    return λ./sum(λ)
+    t₁₂=calculateT12(11,Qᵦ,Eₓ,BGT)
+
+    return λ.*t₁₂/log(2)
     
 end
 
@@ -392,7 +394,7 @@ Current version requires LsqFit to be loaded.
 data:           histogram array in the [energy counts] format
 xlow:           low energy cut for the fit
 xhigh:          high energy cut for the fit
-param:          initial fit parameters vector (must be 3*n+1). Format: [background-constant,background-slope,area1,centroid1,sigma1,area2,centroid2,sigma2,...]
+param:          initial fit parameters vector (must be 3*n+2). Format: [background-constant,background-slope,area1,centroid1,sigma1,area2,centroid2,sigma2,...]
 n:              number of peaks to fit (default=1)
 lowerbounds:    lower parameter bounds (optional). same format as param
 upperbounds:    upper parameter bounds (optional). same format as param
