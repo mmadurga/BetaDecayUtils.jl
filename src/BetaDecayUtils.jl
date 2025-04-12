@@ -337,7 +337,7 @@ function nPenetrability(x,mass::Vector,Lorb)
     AM1 = mass[1] #recoil
     AM2 = mass[2] #neutron
     E = x  * 1000.       #Energy in keV
-    R = 1.4  * AM1^0.333333 + AM2^0.333333
+    R = 1.4  * (AM1 + AM2)^0.333333
     RMAS = AM1*AM2/(AM1+AM2)*931502
     eo = (197329^2)/(2*RMAS*R^2)
     k = sqrt(2*RMAS*E)/197329
