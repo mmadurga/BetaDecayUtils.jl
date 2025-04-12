@@ -1,7 +1,7 @@
 name = "BetaDecayUtils"
 uuid = "b2723bf5-94c5-4359-89e1-3e553b39f040"
 authors = ["Miguel Madurga"]
-version = "1.5.4"
+version = "1.5.2"
 
 [deps]
 LsqFit = "2fda8390-95c7-5789-9bda-21331edee243"
