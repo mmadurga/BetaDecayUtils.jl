@@ -176,10 +176,10 @@ function calculateT12(z,Qᵦ,Eₓ::Vector,BGT::Vector)
     βEp = (Qᵦ .-  (Eₓ)) .* 1000 #convert to keV
     lf = evalCoeff[1] .+ evalCoeff[2].*log.(βEp[findall(βEp.>0)]) .+ evalCoeff[3].*log.(βEp[findall(βEp.>0)]).^2. .+ evalCoeff[4].*log.(βEp[findall(x->x>0,βEp)]).^3.
 
-    D=6144/(-1.2701)^2
+    D=6144
     λ=log(2) .* 10 .^lf .* BGT[findall(βEp.>0)] ./ D
 
-    return log(2)./sum(λ)
+    return log(2) ./ sum(λ)
     
 end
 
@@ -217,7 +217,7 @@ function calculateIb(z,Qᵦ,Eₓ::Vector,BGT::Vector)
     βEp = (Qᵦ .-  (Eₓ)) .* 1000 #convert to keV
     lf = evalCoeff[1] .+ evalCoeff[2].*log.(βEp[findall(βEp.>0)]) .+ evalCoeff[3].*log.(βEp[findall(βEp.>0)]).^2. .+ evalCoeff[4].*log.(βEp[findall(x->x>0,βEp)]).^3.
 
-    D=6144/(-1.2701)^2
+    D=6144
     λ=log(2) .* 10 .^lf .* BGT[findall(βEp.>0)] ./ D
 
     t₁₂=calculateT12(z,Qᵦ,Eₓ,BGT)
