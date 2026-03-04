@@ -12,11 +12,12 @@ export  calculateqbetashellmodel,
         calculateIb,
         calculateBGT,
         ecoulomb,
-        gammafit
+        gammafit,
+        wavefunction
 
-import LsqFit
+import LsqFit,SpecialFunctions
 
-## β decay utilities
+### β decay utilities
 
 """
 
@@ -174,7 +175,7 @@ function calculateT12(z,Qᵦ,Eₓ::Vector,BGT::Vector)
     coeff[4,1] + log(zDaughter) * coeff[4,2] + coeff[4,3]*log(zDaughter)^2. + coeff[4,4]*log(zDaughter)^3.  
     ]
     βEp = (Qᵦ .-  (Eₓ)) .* 1000 #convert to keV
-    lf = evalCoeff[1] .+ evalCoeff[2].*log.(βEp[findall(βEp.>0)]) .+ evalCoeff[3].*log.(βEp[findall(βEp.>0)]).^2. .+ evalCoeff[4].*log.(βEp[findall(x->x>0,βEp)]).^3.
+    lf = evalCoeff[1] .+ evalCoeff[2].*log.(βEp[findall(βEp.>0)]) .+ evalCoeff[3].*log.(βEp[findall(βEp.>0)]).^2. .+ evalCoeff[4].*log.(βEp[findaLorb(x->x>0,βEp)]).^3.
 
     D=6144
     λ=log(2) .* 10 .^lf .* BGT[findall(βEp.>0)] ./ D
@@ -323,21 +324,19 @@ end
 
 
 """
-nPenetrability(x,mass::Vector,Lorb)
+nPenetrability(x,AM1,AM2,Lorb)
 
-calculates the neutron penetrability p(x,Lorb).
+calculates the neutron penetrability p(x,Lorb) from Blatt and Weisskopf "Theoretical Nuclear Physics" p. 463
 
 x is the excitation energy above Sₙ, Lorb is the neutron angular momentum
 
-mass[1] is the recoil, mass[2] is the neutron mass
+AM1 is the recoil, AM2 is the neutron mass
 
 """
-function nPenetrability(x,mass::Vector,Lorb)
+function nPenetrability(x,AM1,AM2,Lorb)
     
-    AM1 = mass[1] #recoil
-    AM2 = mass[2] #neutron
     E = x  * 1000.       #Energy in keV
-    R = 1.4  * (AM1 + AM2)^0.333333
+    R = 1.4  * (AM1 + AM2)^(1/3)
     RMAS = AM1*AM2/(AM1+AM2)*931502
     eo = (197329^2)/(2*RMAS*R^2)
     k = sqrt(2*RMAS*E)/197329
@@ -387,5 +386,50 @@ function nPenetrability(x,mass::Vector,Lorb)
     end
 
 end
+
+end
+
+"""
+wavefunction(E,V0,AM1,AM2,Lorb,r)
+
+calculates the inner and outer wavefunctions as a function of the spherical radial coordinate r for neutron emission using a spherical square well potential
+
+E is the excitation energy above Sₙ, V0 is the potential depth, AM1 and AM2 are the residue's and neutron mass in au and Lorb is the neutron angular momentum
+
+"""
+function wavefunction(E,V0,AM1,AM2,Lorb,r)
+ 
+    ħc = 197.326
+
+    RMAS = AM1*AM2/(AM1+AM2)*931.502
+    mn = 1.008*931.502
+    a = 1.4*(AM1+AM2)^0.3333
+
+    k = sqrt(2 * RMAS * (E + V0)) / ħc
+    q = sqrt(2 * RMAS * E) / ħc
+
+    A = sqrt(1/(quadgk(r->sphericalbesselj(Lorb,k*r)^2*r^2,0,a)[1]))
+    C = A*sphericalbesselj(l,k*a)/(sphericalbesselj(l,q*a)+sphericalbessely(Lorb,q*a))
+    
+
+    u1(r) = A*sphericalbesselj(Lorb,k*r)*r
+    o1(r) = C*(sphericalbesselj(Lorb,q*r)+sphericalbessely(Lorb,q*r))*r
+    return u1(r),o1(r)
+end
+
+"""
+Gamma(E,V0,AM1,AM2,Lorb,r)
+
+calculates the neutron emission single particle width assuming a square well potential.
+E is the excitation energy above Sₙ, V0 is the potential depth, AM1 and AM2 are the residue's and neutron mass in au and Lorb is the neutron angular momentum
+
+"""
+function Gamma(E,V0,AM1,AM2,Lorb) 
+   
+    ħc = 197.326
+    R = 1.48 * (AM1 + AM2)^(1/3)
+    RMAS = AM1*AM2/(AM1+AM2)*931.502
+
+    return 2*ħc^2/(2*RMAS*R)*wavefunction(E,V0,AM1,AM2,Lorb,R)[1]^2*nPenetrability(E,[AM1,AM2],Lorb)
 
 end
