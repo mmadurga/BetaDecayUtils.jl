@@ -13,7 +13,8 @@ export  calculateqbetashellmodel,
         calculateBGT,
         ecoulomb,
         gammafit,
-        wavefunction
+        wavefunction,
+        Gamma
 
 import LsqFit,SpecialFunctions
 
