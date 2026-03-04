@@ -410,7 +410,7 @@ function wavefunction(E,V0,AM1,AM2,Lorb,r)
     q = sqrt(2 * RMAS * E) / ħc
 
     A = sqrt(1/(quadgk(r->sphericalbesselj(Lorb,k*r)^2*r^2,0,a)[1]))
-    C = A*sphericalbesselj(l,k*a)/(sphericalbesselj(l,q*a)+sphericalbessely(Lorb,q*a))
+    C = A*sphericalbesselj(Lorb,k*a)/(sphericalbesselj(Lorb,q*a)+sphericalbessely(Lorb,q*a))
     
 
     u1(r) = A*sphericalbesselj(Lorb,k*r)*r
@@ -431,6 +431,6 @@ function Gamma(E,V0,AM1,AM2,Lorb)
     R = 1.48 * (AM1 + AM2)^(1/3)
     RMAS = AM1*AM2/(AM1+AM2)*931.502
 
-    return 2*ħc^2/(2*RMAS*R)*wavefunction(E,V0,AM1,AM2,Lorb,R)[1]^2*nPenetrability(E,[AM1,AM2],Lorb)
+    return 2*ħc^2/(2*RMAS*R)*wavefunction(E,V0,AM1,AM2,Lorb,R)[1]^2*nPenetrability(E,AM1,AM2,Lorb)
 
 end
