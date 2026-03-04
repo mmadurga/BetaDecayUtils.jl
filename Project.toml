@@ -1,13 +1,15 @@
 name = "BetaDecayUtils"
 uuid = "b2723bf5-94c5-4359-89e1-3e553b39f040"
 authors = ["Miguel Madurga"]
-version = "1.5.3"
+version = "1.6"
 
 [deps]
 LsqFit = "2fda8390-95c7-5789-9bda-21331edee243"
+SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"
 
 [compat]
 LsqFit = "0.15.0"
+SpecialFunctions = "2.7.1"
 julia = "1"
 
 [extras]
