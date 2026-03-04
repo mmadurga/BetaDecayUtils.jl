@@ -16,7 +16,7 @@ export  calculateqbetashellmodel,
         wavefunction,
         Gamma
 
-import LsqFit,SpecialFunctions
+import LsqFit,SpecialFunctions,QuadGK
 
 ### β decay utilities
 
@@ -388,7 +388,7 @@ function nPenetrability(x,AM1,AM2,Lorb)
 
 end
 
-end
+
 
 """
 wavefunction(E,V0,AM1,AM2,Lorb,r)
@@ -403,19 +403,18 @@ function wavefunction(E,V0,AM1,AM2,Lorb,r)
     ħc = 197.326
 
     RMAS = AM1*AM2/(AM1+AM2)*931.502
-    mn = 1.008*931.502
-    a = 1.4*(AM1+AM2)^0.3333
+    Ro = 1.4*(AM1+AM2)^0.3333
 
     k = sqrt(2 * RMAS * (E + V0)) / ħc
     q = sqrt(2 * RMAS * E) / ħc
 
-    A = sqrt(1/(quadgk(r->sphericalbesselj(Lorb,k*r)^2*r^2,0,a)[1]))
-    C = A*sphericalbesselj(Lorb,k*a)/(sphericalbesselj(Lorb,q*a)+sphericalbessely(Lorb,q*a))
+    A = sqrt(1/(QuadGK.quadgk(r->SpecialFunctions.sphericalbesselj(Lorb,k*r)^2*r^2,0,Ro)[1]))
+    C = A*SpecialFunctions.sphericalbesselj(Lorb,k*Ro)/(SpecialFunctions.sphericalbesselj(Lorb,q*Ro)+SpecialFunctions.sphericalbessely(Lorb,q*Ro))
     
-
-    u1(r) = A*sphericalbesselj(Lorb,k*r)*r
-    o1(r) = C*(sphericalbesselj(Lorb,q*r)+sphericalbessely(Lorb,q*r))*r
-    return u1(r),o1(r)
+    u1 = A*SpecialFunctions.sphericalbesselj(Lorb,k*r)*r
+    o1 = C*(SpecialFunctions.sphericalbesselj(Lorb,q*r)+SpecialFunctions.sphericalbessely(Lorb,q*r))*r
+    
+    return u1,o1
 end
 
 """
@@ -432,5 +431,7 @@ function Gamma(E,V0,AM1,AM2,Lorb)
     RMAS = AM1*AM2/(AM1+AM2)*931.502
 
     return 2*ħc^2/(2*RMAS*R)*wavefunction(E,V0,AM1,AM2,Lorb,R)[1]^2*nPenetrability(E,AM1,AM2,Lorb)
+
+end
 
 end
