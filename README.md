@@ -190,6 +190,6 @@ calculates the inner and outer wavefunctions as a function of the spherical radi
 `Gamma(E,V0,AM1,AM2,Lorb,r)`
 
 calculates the neutron emission single particle width assuming a square well potential.
-`E` is the excitation energy above Sₙ, `V0` is the potential depth, `AM1` and `AM2` are the residue's and neutron mass in au and `Lorb` is the neutron angular momentum
+`E` is the excitation energy above Sₙ, `V0` is the potential depth, `AM1` and `AM2` are the residue's and neutron mass in au, `Lorb` is the neutron angular momentum and `r` is the nuclear boundary.
 
 ###
