@@ -164,54 +164,32 @@ calculate the logft for a given `BGT` (not quenched)
 
 ### Neutron penetrability as a function of the neutron angular momentum
 
-`nPenetrability(x,mass::Vector,Lorb)`
+`nPenetrability(x,AM1,Am2,Lorb)`
 
 calculates the neutron penetrability p(x,Lorb).
 
 `x` is the excitation energy above `Sₙ`, `Lorb` is the neutron angular momentum
 
-`mass[1]` is the recoil, `mass[2]` is the neutron mass.
+`AM1` is the recoil, `AM2` is the neutron mass in au.
 
 
 ###
 
-### Gaussian fit of gamma photopeak
+### Wavefunctions for a spherical square well.
 
-`gammafit(data,xlow,xhigh,param::Vector,n=nothing,lowerbounds=nothing,upperbounds=nothing)`
+`wavefunction(E,V0,AM1,AM2,Lorb,r)`
 
-Fit a gamma line in a histogram using a gaussian distribution with linear background. 
-Returns a three element list containing: parameters from fit; standard error of the parameters; fitting function f(x,param)
+calculates the inner and outer wavefunctions as a function of the spherical radial coordinate `r` for neutron emission using a spherical square well potential
 
-Current version requires `LsqFit` to be loaded
+`E` is the excitation energy above Sₙ, `V0` is the potential depth, `AM1` and `AM2` are the residue's and neutron mass in au and `Lorb` is the neutron angular momentum
 
-`data`:           histogram in the `[energy counts]` format
+###
 
-`xlow`:           low energy cut for the fit
+### Single particle resonance width.
 
-`xhigh`:          high energy cut for the fit
+`Gamma(E,V0,AM1,AM2,Lorb,r)`
 
-`param`:          initial fit parameters vector (must be 3*n+1). Format: `[background-constant,background-slope,area1,centroid1,sigma1,area2,centroid2,sigma2,...]`
-
-`n`:              number of peaks to fit (default=1)
-
-`lowerbounds`:    lower parameter bounds (optional). same format as param
-
-`upperbounds`:    upper parameter bounds (optional). same format as param
-
-Example: fit a gamma line at 988 keV
-
-`xlow,xhigh,param=980,1000,[600,0.05,1000,988,0.8]`
-
-`p,s,f = gammafit(data,xlow,xhigh,param)`
-
-to print the result of the fit parameters
-
-`for (i,val) in enumerate(p)`
-    `println("P$i = ",val,"($(s[i]))")`
-`end`
-
-to plot the result of the fit use the returned function f with the optimized parameters p
-
-`plot(e->f(e,p),xlow,xhigh)`
+calculates the neutron emission single particle width assuming a square well potential.
+`E` is the excitation energy above Sₙ, `V0` is the potential depth, `AM1` and `AM2` are the residue's and neutron mass in au and `Lorb` is the neutron angular momentum
 
 ###
