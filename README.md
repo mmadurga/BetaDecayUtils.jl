@@ -164,7 +164,7 @@ calculate the logft for a given `BGT` (not quenched)
 
 ### Neutron penetrability as a function of the neutron angular momentum
 
-`nPenetrability(x,AM1,Am2,Lorb)`
+`nPenetrability(x,AM1,AM2,Lorb)`
 
 calculates the neutron penetrability p(x,Lorb).
 
