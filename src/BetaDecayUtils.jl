@@ -263,7 +263,7 @@ function calculateBGT(z,Qᵦ,T₁₂,Eₓ::Vector,Iᵦ::Vector)
     βEp = (Qᵦ .-  (Eₓ)) .* 1000 #convert to keV
     lf = evalCoeff[1] .+ evalCoeff[2].*log.(βEp[findall(βEp.>0)]) .+ evalCoeff[3].*log.(βEp[findall(βEp.>0)]).^2. .+ evalCoeff[4].*log.(βEp[findall(x->x>0,βEp)]).^3.
 
-    D=6147/(-1.2701)^2
+    D=6147
 
     return D.*Iᵦ./(10 .^lf*T₁₂)
     
@@ -319,7 +319,7 @@ calculate the logft for a given BGT (not quenched)
 """
 function logftfrombgt(bgt)
     
-    return log10((6147/(1.2761^2*bgt)))
+    return log10((6147/bgt))
 
 end
 
