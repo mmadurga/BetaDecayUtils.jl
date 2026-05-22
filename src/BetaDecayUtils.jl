@@ -176,7 +176,7 @@ function calculateT12(z,Qᵦ,Eₓ::Vector,BGT::Vector)
     coeff[4,1] + log(zDaughter) * coeff[4,2] + coeff[4,3]*log(zDaughter)^2. + coeff[4,4]*log(zDaughter)^3.  
     ]
     βEp = (Qᵦ .-  (Eₓ)) .* 1000 #convert to keV
-    lf = evalCoeff[1] .+ evalCoeff[2].*log.(βEp[findall(βEp.>0)]) .+ evalCoeff[3].*log.(βEp[findall(βEp.>0)]).^2. .+ evalCoeff[4].*log.(βEp[findaLorb(x->x>0,βEp)]).^3.
+    lf = evalCoeff[1] .+ evalCoeff[2].*log.(βEp[findall(βEp.>0)]) .+ evalCoeff[3].*log.(βEp[findall(βEp.>0)]).^2. .+ evalCoeff[4].*log.(βEp[findall(x->x>0,βEp)]).^3.
 
     D=6147
     λ=log(2) .* 10 .^lf .* BGT[findall(βEp.>0)] ./ D
