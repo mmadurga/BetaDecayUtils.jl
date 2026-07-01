@@ -12,7 +12,7 @@ export  calculateqbetashellmodel,
         calculateIb,
         calculateBGT,
         ecoulomb,
-        gammafit,
+        calculateBE2T12,
         wavefunction,
         Gamma
 
@@ -389,6 +389,24 @@ function nPenetrability(x,AM1,AM2,Lorb)
 end
 
 
+"""
+calculateBE2T12(A,Eᵧ,BE2,units=nothing)
+
+calculate the halflife of a E2 nuclear electromagnetic transition
+
+A: nuclear mass number
+Eᵧ: transition energy in MeV
+BE2: transition probability in e2fm4 (for BE2 in w.u. define units="wu")
+
+
+"""
+function calculateBE2T12(A,Eᵧ,BE2,units=nothing)
+    if units=="wu" BE2e2fm4 = BE2 * 0.0594 * A^(4/3);
+    else BE2e2fm4 = BE2
+    end
+    λ = 1.2239e9 * Eᵧ^5 * BE2e2fm4
+    return log(2)/λ
+end
 
 """
 wavefunction(E,V0,AM1,AM2,Lorb,r)
