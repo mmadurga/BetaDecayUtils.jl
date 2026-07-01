@@ -175,6 +175,19 @@ calculates the neutron penetrability p(x,Lorb).
 
 ###
 
+### E2 Electromagnetic decay halflife
+
+`calculateBE2T12(A,Eᵧ,BE2,units=nothing)`
+
+calculate the halflife of a E2 nuclear electromagnetic transition (does not include correction for conversion electrons)
+
+`A`: nuclear mass number
+`Eᵧ`: transition energy in MeV
+`BE2`: transition probability in e2fm4 (for `BE2` in w.u. define units=`"wu"`)
+
+
+###
+
 ### Wavefunctions for a spherical square well.
 
 `wavefunction(E,V0,AM1,AM2,Lorb,r)`

@@ -392,7 +392,7 @@ end
 """
 calculateBE2T12(A,Eᵧ,BE2,units=nothing)
 
-calculate the halflife of a E2 nuclear electromagnetic transition
+calculate the halflife of a E2 nuclear electromagnetic transition (does not include correction for conversion electrons)
 
 A: nuclear mass number
 Eᵧ: transition energy in MeV
