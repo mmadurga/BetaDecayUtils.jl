@@ -4,6 +4,7 @@ export  calculateqbetashellmodel,
         logf,
         logftfromib,
         calculateT12,
+        calculateT12fullFermi,
         childActivity, 
         grandChildActivity,
         chainActivity,
@@ -178,11 +179,56 @@ function calculateT12(z,Qᵦ,Eₓ::Vector,BGT::Vector)
     βEp = (Qᵦ .-  (Eₓ)) .* 1000 #convert to keV
     lf = evalCoeff[1] .+ evalCoeff[2].*log.(βEp[findall(βEp.>0)]) .+ evalCoeff[3].*log.(βEp[findall(βEp.>0)]).^2. .+ evalCoeff[4].*log.(βEp[findall(x->x>0,βEp)]).^3.
 
-    D=6147
+    D=6144.5
     λ=log(2) .* 10 .^lf .* BGT[findall(βEp.>0)] ./ D
 
     return log(2) ./ sum(λ)
     
+end
+
+
+"""
+
+calculateT12fullFermi(A,z,Qᵦ,Eₓ,BGT)
+
+Calculate the beta-decay half-life using a relativistic Fermi-function
+integral for each energetically allowed transition.
+
+`A` is the mass number used for the finite-size nuclear radius. It may be a
+scalar or a vector matching `Eₓ`.
+
+This implements allowed beta-minus decay, with `z+1` as the daughter charge.
+Q values and excitation energies are in MeV, and `BGT` uses the same
+normalization as `calculateT12`.
+"""
+function calculateT12fullFermi(A,z,Qᵦ,Eₓ::Vector,BGT::Vector)
+
+    α = 1 / 137.035999084
+    mₑ = 0.51099895 # MeV
+    λₑ = 386.15926764 # electron Compton wavelength in fm
+    zDaughter = z + 1
+    γ = sqrt(1 - (α*zDaughter)^2)
+    βEp = (Qᵦ .- Eₓ)
+    allowed = findall(βEp .> 0)
+
+    f = similar(βEp[allowed], Float64)
+    for (j, i) in enumerate(allowed)
+        radius = 1.2 * (A isa AbstractVector ? A[i] : A)^(1/3) / λₑ
+        w₀ = 1 + βEp[i] / mₑ
+        f[j] = QuadGK.quadgk(w -> begin
+            p = sqrt(w^2 - 1)
+            y = α * zDaughter * w / p
+            F = 4 * (2*p*radius)^(2*(γ - 1)) *
+                abs(SpecialFunctions.gamma(γ + im*y))^2 * exp(pi*y) /
+                SpecialFunctions.gamma(2*γ + 1)^2
+            p * w * (w₀ - w)^2 * F
+        end, 1, w₀)[1]
+    end
+
+    D = 6144.5
+    λ = log(2) .* f .* BGT[allowed] ./ D
+    return log(2) / sum(λ)
+
 end
 
 
@@ -219,7 +265,7 @@ function calculateIb(z,Qᵦ,Eₓ::Vector,BGT::Vector)
     βEp = (Qᵦ .-  (Eₓ)) .* 1000 #convert to keV
     lf = evalCoeff[1] .+ evalCoeff[2].*log.(βEp[findall(βEp.>0)]) .+ evalCoeff[3].*log.(βEp[findall(βEp.>0)]).^2. .+ evalCoeff[4].*log.(βEp[findall(x->x>0,βEp)]).^3.
 
-    D=6147
+    D=6144.5
     λ=log(2) .* 10 .^lf .* BGT[findall(βEp.>0)] ./ D
 
     t₁₂=calculateT12(z,Qᵦ,Eₓ,BGT)
@@ -263,7 +309,7 @@ function calculateBGT(z,Qᵦ,T₁₂,Eₓ::Vector,Iᵦ::Vector)
     βEp = (Qᵦ .-  (Eₓ)) .* 1000 #convert to keV
     lf = evalCoeff[1] .+ evalCoeff[2].*log.(βEp[findall(βEp.>0)]) .+ evalCoeff[3].*log.(βEp[findall(βEp.>0)]).^2. .+ evalCoeff[4].*log.(βEp[findall(x->x>0,βEp)]).^3.
 
-    D=6147
+    D=6144.5
 
     return D.*Iᵦ./(10 .^lf*T₁₂)
     
@@ -319,7 +365,7 @@ calculate the logft for a given BGT (not quenched)
 """
 function logftfrombgt(bgt)
     
-    return log10((6147/bgt))
+    return log10((6144.5/bgt))
 
 end
 
