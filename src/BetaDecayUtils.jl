@@ -412,7 +412,7 @@ function nPenetrability(x,AM1,AM2,Lorb)
     p6 = p5*(σ^2/((6-s5)^2+p5^2))
 
     s7 = (σ^2*(7-s6) / ((7-s6)^2+p6^2) ) - 7
-    p7 = p6*(σ^2/((6-s6)^2+p6^2))
+    p7 = p6*(σ^2/((7-s6)^2+p6^2))
 
     if (Lorb==0.) 
         return p0
