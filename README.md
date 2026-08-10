@@ -164,11 +164,11 @@ calculate the logft for a given `BGT` (not quenched)
 
 ### Neutron penetrability as a function of the neutron angular momentum
 
-`nPenetrability(x,AM1,AM2,Lorb)`
+`nPenetrability(x,AM1,AM2,Lorb; R=1.4*(AM1+AM2)^(1/3))`
 
 calculates the neutron penetrability p(x,Lorb).
 
-`x` is the excitation energy above `Sₙ`, `Lorb` is the neutron angular momentum
+`x` is the neutron energy above `Sₙ`, `Lorb` is the neutron angular momentum, and `R` is the channel radius in fm.
 
 `AM1` is the recoil, `AM2` is the neutron mass in au.
 
@@ -188,21 +188,16 @@ calculate the halflife of a E2 nuclear electromagnetic transition (does not incl
 
 ###
 
-### Wavefunctions for a spherical square well.
-
-`wavefunction(E,V0,AM1,AM2,Lorb,r)`
-
-calculates the inner and outer wavefunctions as a function of the spherical radial coordinate `r` for neutron emission using a spherical square well potential
-
-`E` is the excitation energy above Sₙ, `V0` is the potential depth, `AM1` and `AM2` are the residue's and neutron mass in au and `Lorb` is the neutron angular momentum
-
-###
-
 ### Single particle resonance width.
 
-`Gamma(E,V0,AM1,AM2,Lorb,r)`
+`Gamma(E,AM1,AM2,Lorb; R=1.4*(AM1+AM2)^(1/3), warn_validity=false)`
 
-calculates the neutron emission single particle width assuming a square well potential.
-`E` is the excitation energy above Sₙ, `V0` is the potential depth, `AM1` and `AM2` are the residue's and neutron mass in au, `Lorb` is the neutron angular momentum and `r` is the nuclear boundary.
+calculates the Bohr--Mottelson low-energy square-well neutron single-particle width
+
+`Gamma = 2*P*(ħc)^2/(μ*c^2*R^2)*(2*Lorb-1)/(2*Lorb+1)`
+
+in MeV. `E` is the neutron energy above Sₙ, `AM1` and `AM2` are the residue and neutron masses in au, `Lorb ≥ 1` is the neutron angular momentum, and `R` is the channel radius in fm. The approximation is derived for `kR << 1`; set `warn_validity=true` to warn when `kR ≥ 1`. It is a depth-independent single-particle estimate rather than an exact complex-pole width, and a physical partial width may require a spectroscopic factor.
+
+The former `Gamma(E,V0,AM1,AM2,Lorb; R=...)` and `Gamma(E,V0,AM1,AM2,Lorb,R)` forms are deprecated compatibility wrappers. `V0` is ignored.
 
 ###

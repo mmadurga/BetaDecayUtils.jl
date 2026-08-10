@@ -14,7 +14,6 @@ export  calculateqbetashellmodel,
         calculateBGT,
         ecoulomb,
         calculateBE2T12,
-        wavefunction,
         Gamma
 
 import LsqFit,SpecialFunctions,QuadGK
@@ -370,26 +369,34 @@ function logftfrombgt(bgt)
 end
 
 
+_default_neutron_radius(AM1, AM2) = 1.4 * (AM1 + AM2)^(1 / 3)
+
+function _validate_neutron_inputs(E, AM1, AM2, Lorb, R)
+    E >= 0 || throw(DomainError(E, "neutron energy must be nonnegative"))
+    AM1 > 0 || throw(DomainError(AM1, "recoil mass must be positive"))
+    AM2 > 0 || throw(DomainError(AM2, "neutron mass must be positive"))
+    R > 0 || throw(DomainError(R, "channel radius must be positive"))
+    isinteger(Lorb) && Lorb >= 0 ||
+        throw(ArgumentError("Lorb must be a nonnegative integer"))
+    Lorb <= 7 || throw(ArgumentError("Lorb must be ≤ 7"))
+    return Int(Lorb)
+end
+
 """
-nPenetrability(x,AM1,AM2,Lorb)
+    nPenetrability(E, AM1, AM2, Lorb; R=1.4*(AM1+AM2)^(1/3))
 
-calculates the neutron penetrability p(x,Lorb) from Blatt and Weisskopf "Theoretical Nuclear Physics" p. 463  and Lane-Thomas p. 350 (eq. A.12 and A.13) [A. M. Lane and R. G. Thomas, “R-Matrix Theory of Nuclear Reactions,” Rev. of Modern Phys. 30, 257–353 (1958)]
+Calculate the dimensionless neutron penetrability ``P_ℓ(E,R)`` from Blatt
+and Weisskopf and Lane and Thomas. `E` is the neutron center-of-mass energy in
+MeV above threshold, and `R` is the channel radius in fm.
 
-x is the excitation energy above Sₙ, Lorb is the neutron angular momentum
-
-AM1 is the recoil, AM2 is the neutron mass
+`AM1` and `AM2` are the recoil and neutron masses in atomic mass units, and
+`Lorb` is the neutron orbital angular momentum.
 
 """
-function nPenetrability(x,AM1,AM2,Lorb)
-    
-    if Lorb > 7
-        throw(ArgumentError("Lorb must be ≤ 7"))
-    end
-
-    E = x  * 1000.       #Energy in keV
-    R = 1.4  * (AM1 + AM2)^(1/3)
+function nPenetrability(x, AM1, AM2, Lorb; R=_default_neutron_radius(AM1, AM2))
+    ℓmax = _validate_neutron_inputs(x, AM1, AM2, Lorb, R)
+    E = x * 1000.0       # Energy in keV
     RMAS = AM1*AM2/(AM1+AM2)*931502
-    eo = (197329^2)/(2*RMAS*R^2)
     k = sqrt(2*RMAS*E)/197329
     
     σ = k*R
@@ -404,7 +411,7 @@ function nPenetrability(x,AM1,AM2,Lorb)
         p[ℓ + 1] = p[ℓ] * σ^2 / denominator
     end
 
-    return p[Int(Lorb) + 1]
+    return p[ℓmax + 1]
 
 end
 
@@ -429,47 +436,53 @@ function calculateBE2T12(A,Eᵧ,BE2,units=nothing)
 end
 
 """
-wavefunction(E,V0,AM1,AM2,Lorb,r)
+    Gamma(E, AM1, AM2, Lorb; R=1.4*(AM1+AM2)^(1/3), warn_validity=false)
 
-calculates the inner and outer wavefunctions as a function of the spherical radial coordinate r for neutron emission using a spherical square well potential
+Calculate the Bohr--Mottelson low-energy square-well estimate of the neutron
+single-particle width,
 
-E is the excitation energy above Sₙ, V0 is the potential depth, AM1 and AM2 are the residue's and neutron mass in au and Lorb is the neutron angular momentum
+``Γ_ℓ(E) = 2P_ℓ(E,R) ((ħc)^2/(μc^2 R^2)) (2ℓ-1)/(2ℓ+1)``,
 
+in MeV. `E` is the neutron center-of-mass energy above threshold in MeV,
+`AM1` and `AM2` are masses in atomic mass units, `Lorb` is the neutron orbital
+angular momentum, and `R` is the channel radius in fm.
+
+This approximation requires `Lorb ≥ 1` and is derived for ``kR ≪ 1``. Set
+`warn_validity=true` to emit a warning when ``kR ≥ 1``. The result is a
+depth-independent single-particle estimate, not an exact S-matrix pole width;
+a physical partial width may also require a spectroscopic factor.
+
+The former signatures `Gamma(E, V0, AM1, AM2, Lorb; R=...)` and
+`Gamma(E, V0, AM1, AM2, Lorb, R)` remain as deprecated compatibility wrappers;
+`V0` is ignored.
 """
-function wavefunction(E,V0,AM1,AM2,Lorb,r)
- 
+function Gamma(E, AM1, AM2, Lorb;
+               R=_default_neutron_radius(AM1, AM2), warn_validity=false)
     ħc = 197.326
-
+    ℓ = _validate_neutron_inputs(E, AM1, AM2, Lorb, R)
+    ℓ >= 1 || throw(ArgumentError(
+        "the Bohr--Mottelson square-well width approximation requires Lorb ≥ 1"))
     RMAS = AM1*AM2/(AM1+AM2)*931.502
-    Ro = 1.4*(AM1+AM2)^0.3333
-
-    k = sqrt(2 * RMAS * (E + V0)) / ħc
-    q = sqrt(2 * RMAS * E) / ħc
-
-    A = sqrt(1/(QuadGK.quadgk(r->SpecialFunctions.sphericalbesselj(Lorb,k*r)^2*r^2,0,Ro)[1]))
-    C = A*SpecialFunctions.sphericalbesselj(Lorb,k*Ro)/(SpecialFunctions.sphericalbesselj(Lorb,q*Ro)+SpecialFunctions.sphericalbessely(Lorb,q*Ro))
-    
-    u1 = A*SpecialFunctions.sphericalbesselj(Lorb,k*r)*r
-    o1 = C*(SpecialFunctions.sphericalbesselj(Lorb,q*r)+SpecialFunctions.sphericalbessely(Lorb,q*r))*r
-    
-    return u1,o1
+    kR = R * sqrt(2*RMAS*E) / ħc
+    if warn_validity && kR >= 1
+        @warn "Bohr--Mottelson square-well width is a low-energy approximation" kR
+    end
+    P = nPenetrability(E, AM1, AM2, ℓ; R=R)
+    γ² = ħc^2/(RMAS*R^2) * (2ℓ - 1)/(2ℓ + 1)
+    return 2*P*γ²
 end
 
-"""
-Gamma(E,V0,AM1,AM2,Lorb,r)
+function Gamma(E, V0, AM1, AM2, Lorb; R=_default_neutron_radius(AM1, AM2),
+               warn_validity=false)
+    Base.depwarn("Gamma(E, V0, AM1, AM2, Lorb) is deprecated because V0 is " *
+                 "unused; call Gamma(E, AM1, AM2, Lorb; R=R) instead", :Gamma)
+    return Gamma(E, AM1, AM2, Lorb; R=R, warn_validity=warn_validity)
+end
 
-calculates the neutron emission single particle width assuming a square well potential.
-E is the excitation energy above Sₙ, V0 is the potential depth, AM1 and AM2 are the residue's and neutron mass in au and Lorb is the neutron angular momentum
-
-"""
-function Gamma(E,V0,AM1,AM2,Lorb) 
-   
-    ħc = 197.326
-    R = 1.48 * (AM1 + AM2)^(1/3)
-    RMAS = AM1*AM2/(AM1+AM2)*931.502
-
-    return 2*ħc^2/(2*RMAS*R)*wavefunction(E,V0,AM1,AM2,Lorb,R)[1]^2*nPenetrability(E,AM1,AM2,Lorb)
-
+function Gamma(E, V0, AM1, AM2, Lorb, R; warn_validity=false)
+    Base.depwarn("Gamma(E, V0, AM1, AM2, Lorb, R) is deprecated because V0 is " *
+                 "unused; call Gamma(E, AM1, AM2, Lorb; R=R) instead", :Gamma)
+    return Gamma(E, AM1, AM2, Lorb; R=R, warn_validity=warn_validity)
 end
 
 end
