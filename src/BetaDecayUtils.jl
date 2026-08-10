@@ -382,6 +382,10 @@ AM1 is the recoil, AM2 is the neutron mass
 """
 function nPenetrability(x,AM1,AM2,Lorb)
     
+    if Lorb > 7
+        throw(ArgumentError("Lorb must be ≤ 7"))
+    end
+
     E = x  * 1000.       #Energy in keV
     R = 1.4  * (AM1 + AM2)^(1/3)
     RMAS = AM1*AM2/(AM1+AM2)*931502
