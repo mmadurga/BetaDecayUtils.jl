@@ -196,7 +196,7 @@ calculates the Bohr--Mottelson low-energy square-well neutron single-particle wi
 
 `Gamma = 2*P*(ħc)^2/(μ*c^2*R^2)*(2*Lorb-1)/(2*Lorb+1)`
 
-in MeV. `E` is the neutron energy above Sₙ, `AM1` and `AM2` are the residue and neutron masses in au, `Lorb ≥ 1` is the neutron angular momentum, and `R` is the channel radius in fm. The approximation is derived for `kR << 1`; set `warn_validity=true` to warn when `kR ≥ 1`. It is a depth-independent single-particle estimate rather than an exact complex-pole width, and a physical partial width may require a spectroscopic factor.
+in MeV for `Lorb ≥ 1`. For `Lorb == 0`, Nucracker's special case `γ²=(ħc)^2/(μ*c^2*R^2)` is used. `E` is the neutron energy above Sₙ, `AM1` and `AM2` are the residue and neutron masses in au, and `R` is the channel radius in fm. These are low-energy square-well approximations; set `warn_validity=true` to warn when `kR ≥ 1`. The result is a depth-independent single-particle estimate rather than an exact complex-pole width, and a physical partial width may require a spectroscopic factor. The `Lorb == 0` result is a width scale rather than, in general, the width of a narrow shape resonance.
 
 The former `Gamma(E,V0,AM1,AM2,Lorb; R=...)` and `Gamma(E,V0,AM1,AM2,Lorb,R)` forms are deprecated compatibility wrappers. `V0` is ignored.
 

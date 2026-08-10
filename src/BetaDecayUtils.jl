@@ -447,10 +447,13 @@ in MeV. `E` is the neutron center-of-mass energy above threshold in MeV,
 `AM1` and `AM2` are masses in atomic mass units, `Lorb` is the neutron orbital
 angular momentum, and `R` is the channel radius in fm.
 
-This approximation requires `Lorb ≥ 1` and is derived for ``kR ≪ 1``. Set
-`warn_validity=true` to emit a warning when ``kR ≥ 1``. The result is a
-depth-independent single-particle estimate, not an exact S-matrix pole width;
-a physical partial width may also require a spectroscopic factor.
+For `Lorb == 0`, the Nucracker special case
+``γ_0^2=(ħc)^2/(μc^2R^2)`` is used. These square-well expressions are
+low-energy approximations. Set `warn_validity=true` to emit a warning when
+``kR ≥ 1``. The result is a depth-independent single-particle estimate, not
+an exact S-matrix pole width; a physical partial width may also require a
+spectroscopic factor. The `Lorb == 0` result is a single-particle width scale,
+not generally the width of a narrow shape resonance.
 
 The former signatures `Gamma(E, V0, AM1, AM2, Lorb; R=...)` and
 `Gamma(E, V0, AM1, AM2, Lorb, R)` remain as deprecated compatibility wrappers;
@@ -460,15 +463,14 @@ function Gamma(E, AM1, AM2, Lorb;
                R=_default_neutron_radius(AM1, AM2), warn_validity=false)
     ħc = 197.326
     ℓ = _validate_neutron_inputs(E, AM1, AM2, Lorb, R)
-    ℓ >= 1 || throw(ArgumentError(
-        "the Bohr--Mottelson square-well width approximation requires Lorb ≥ 1"))
     RMAS = AM1*AM2/(AM1+AM2)*931.502
     kR = R * sqrt(2*RMAS*E) / ħc
     if warn_validity && kR >= 1
         @warn "Bohr--Mottelson square-well width is a low-energy approximation" kR
     end
     P = nPenetrability(E, AM1, AM2, ℓ; R=R)
-    γ² = ħc^2/(RMAS*R^2) * (2ℓ - 1)/(2ℓ + 1)
+    reduced_width_factor = ℓ == 0 ? 1 : (2ℓ - 1)/(2ℓ + 1)
+    γ² = ħc^2/(RMAS*R^2) * reduced_width_factor
     return 2*P*γ²
 end
 
