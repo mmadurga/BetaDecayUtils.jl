@@ -373,7 +373,7 @@ end
 """
 nPenetrability(x,AM1,AM2,Lorb)
 
-calculates the neutron penetrability p(x,Lorb) from Blatt and Weisskopf "Theoretical Nuclear Physics" p. 463
+calculates the neutron penetrability p(x,Lorb) from Blatt and Weisskopf "Theoretical Nuclear Physics" p. 463 and Lane-Thomas p. 350 [A. M. Lane and R. G. Thomas, “R-Matrix Theory of Nuclear Reactions,” Rev. of Modern Phys. 30, 257–353 (1958)]
 
 x is the excitation energy above Sₙ, Lorb is the neutron angular momentum
 
